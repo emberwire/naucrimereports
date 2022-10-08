@@ -1,11 +1,12 @@
 # Created by Connor Schwirian
 # Copyright 2017 Mercer Media, LLC.
 # Last updated 21 March 2017
-# Version b.3
+
+# Bug fixes to bring relatively current 08 Oct 2022
+# Version b.3.1
 
 # Features to implement:
 # - Add best practice instructions for NAU generator
-# - Change sexhomkid before you put this on github
 # - REFACTOR
 
 import sys
@@ -20,7 +21,7 @@ from datetime import datetime
 
 def pdfparser(data, name):
 
-    # Change sexhomkid and chil
+    # Change shkd and chil
 
     fp = file(data, 'rb')
     rsrcmgr = PDFResourceManager()
@@ -47,7 +48,7 @@ def pdfparser(data, name):
     fel = []
     chil = []
 
-    sexhomkid = []
+    shkd = []
     dui = []
 
     names = []
@@ -99,8 +100,8 @@ def pdfparser(data, name):
                     elif ('(F)' in string):
                         itemlow = string.lower()
                         if ('sex' in itemlow or 'rape' in itemlow or 'kidnap' in itemlow or 'homicide' in itemlow):
-                            if (string not in sexhomkid):
-                                sexhomkid.append(string)
+                            if (string not in shkd):
+                                shkd.append(string)
                         elif ('dui' in itemlow):
                             if (string not in dui):
                                 dui.append(string)
@@ -114,7 +115,7 @@ def pdfparser(data, name):
                 else:
                     string = ''
 
-    crimeCount = len(mis) + len(fel) + len(chil) + len(dui) + len(sexhomkid)
+    crimeCount = len(mis) + len(fel) + len(chil) + len(dui) + len(shkd)
 
     filedate = date.replace(',', '')
     filedate = filedate.replace(' ', '')
@@ -160,10 +161,10 @@ def pdfparser(data, name):
     textfile.write('<h3 style=\"text-align: center;\"><strong>Date of Crimes: ' + date + '</strong></h3>\n')
 
     textfile.write('[/vc_column_text][/vc_column][/vc_row][vc_row parallax=\"\"][vc_column][vc_tta_accordion][vc_tta_section i_icon_fontawesome=\"fa fa-exclamation-circle\" add_icon=\"true\" title=\"Sexual Assault, Homicide, Rape, and Kidnapping Offenses\" tab_id=\"1485042133193-14b8bd7b-0dd4\"][vc_column_text]\n')
-    if (sexhomkid == []):
+    if (shkd == []):
         textfile.write('No crimes to report.\n')
     else:
-        for item in sexhomkid:
+        for item in shkd:
             textfile.write('<strong>')
             textfile.write(item[:item.find(' of')] + '</strong>')
             textfile.write(item[item.find(' of'):] + '\n\n')
@@ -203,12 +204,12 @@ def pdfparser(data, name):
             textfile.write(item + '\n\n')
 
     textfile.write('[/vc_column_text][/vc_tta_section][vc_tta_section i_icon_fontawesome=\"fa fa-check-circle\" add_icon=\"true\" title=\"Full List of Crimes\" tab_id=\"1485044674237-13c5b160-0ad3\"][vc_column_text]\n')
-    # if (sexhomkid == []):
+    # if (shkd == []):
         # textfile.write('No crimes to report.\n')
         # pass
     # else:
-    if (not sexhomkid == []):
-        for item in sexhomkid:
+    if (not shkd == []):
+        for item in shkd:
             textfile.write('<strong>')
             textfile.write(item[:item.find(' of')] + '</strong>')
             textfile.write(item[item.find(' of'):] + '\n\n')
